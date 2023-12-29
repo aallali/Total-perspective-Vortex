@@ -3,3 +3,5 @@ data/
 app/.ipynb_checkpoints/
 .virtual_documents/
 tenv/
+.ipynb_checkpoints/
+app/__pycache__/
