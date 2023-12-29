@@ -49,7 +49,8 @@ EEG is more than just a scientific marvel; it's a bridge between our inner world
 So, the next time you close your eyes, remember – a symphony of electricity plays within you, waiting to be heard. Grab your metaphorical magnifying glass and dive into the fascinating world of EEG. Who knows what hidden wonders your brain may whisper?
 
 
-![Context Image about EEG](https://www.researchgate.net/profile/Sebastian-Nagel-4/publication/338423585/figure/fig1/AS:844668573073409@1578396089381/Sketch-of-how-to-record-an-Electroencephalogram-An-EEG-allows-measuring-the-electrical.png)
+![Context Image about EEG](./assets/Sketch-of-how-to-record-an-Electroencephalogram-An-EEG-allows-measuring-the-electrical.png)
+* img source from [here](https://www.researchgate.net/profile/Sebastian-Nagel-4/publication/338423585/figure/fig1/AS:844668573073409@1578396089381/Sketch-of-how-to-record-an-Electroencephalogram-An-EEG-allows-measuring-the-electrical.png)
 ### setup enviroment:
 - Install MNE first, follow the official wesite [here](https://mne.tools/stable/install/index.html).
     
