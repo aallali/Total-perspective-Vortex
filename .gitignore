@@ -5,3 +5,4 @@ app/.ipynb_checkpoints/
 tenv/
 .ipynb_checkpoints/
 app/__pycache__/
+tmp/
