@@ -1,8 +1,10 @@
-data/
+data/MNE*
 .DS_Store
-app/.ipynb_checkpoints/
+.ipynb_checkpoints/
 .virtual_documents/
 tenv/
 .ipynb_checkpoints/
-app/__pycache__/
+__pycache__/
 tmp/
+*.joblib
+.idea
