@@ -1,0 +1,8 @@
+matplotlib
+myCSP
+mne
+joblib
+scipy
+scikit-learn
+git+https://github.com/mne-tools/mne-features.git#egg=mne_features
+PyQt5
