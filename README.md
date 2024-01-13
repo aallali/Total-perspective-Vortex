@@ -164,8 +164,11 @@ In summary, while ICA is more focused on the separation of sources and removal o
 -  Install Python Packages including Pillow
     - `pip install matplotlib mne ipykernel Pillow`
 -  enable widgets extensions in jupyter:
-    - `jupyter nbextension enable --py widgetsnbextension`
-
+   - ```shell
+      pip install jupyter_contrib_nbextensions
+      jupyter contrib nbextension install --user
+      jupyter nbextension enable varInspector/main
+      jupyter nbextension enable --py widgetsnbextension
 -  Create Jupyter Kernel for Virtual Environment
     - `python -m ipykernel install --user --name tenv --display-name "Python3 (tenv)" `
 
@@ -177,6 +180,13 @@ In summary, while ICA is more focused on the separation of sources and removal o
     - open desired *.ipynb
     - In the "`Kernel`" menu, select "`Change kernel`" and choose the kernel named "`Python3 (tenv)`" (or the name you specified).
 
+
+
+- fix copy issue from MNE
+`https://stackoverflow.com/questions/76431070/mne-valueerror-data-copying-was-not-requested-by-copy-none-but-it-was-require`
+   solution: `
+modify mne/cov.py Line 1250: RawArray(data.T, info, copy=None, verbose=_verbose_safe_false()), to RawArray(data.T, info, copy="auto", verbose=_verbose_safe_false()
+   `
 
 ### Ressources:
 - [Automated Classification of L/R Hand Movement EEG Signals using Advanced Feature Extraction and Machine Learning, `Mohammad H. Alomari, Aya Samaha, and Khaled AlKamha`,  No. 6, 2013](https://arxiv.org/pdf/1312.2877.pdf)
