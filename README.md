@@ -188,5 +188,9 @@ In summary, while ICA is more focused on the separation of sources and removal o
 modify mne/cov.py Line 1250: RawArray(data.T, info, copy=None, verbose=_verbose_safe_false()), to RawArray(data.T, info, copy="auto", verbose=_verbose_safe_false()
    `
 
-### Ressources:
+### Ressources/Papers:
 - [Automated Classification of L/R Hand Movement EEG Signals using Advanced Feature Extraction and Machine Learning, `Mohammad H. Alomari, Aya Samaha, and Khaled AlKamha`,  No. 6, 2013](https://arxiv.org/pdf/1312.2877.pdf)
+   - page 209: how to select the best channels for a specific experience.
+- CSP equation explained: [Blind Source Separation via Generalized Eigenvalue Decomposition](https://www.jmlr.org/papers/volume4/parra03a/parra03a.pdf)
+- **[Optimizing Spatial Filters for Robust EEG Single-Trial Analysis](https://doc.ml.tu-berlin.de/bbci/publications/BlaTomLemKawMue08.pdf)**
+   - page 3 and 5: CSP effect explained
