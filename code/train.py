@@ -40,7 +40,7 @@ def pipeline_creation(X, y, transformer1, transformer2, transformer3):
     # print(f"LogisticRegression         : accuracy {scores2.mean().round(2)}, std: {scores2.std().round(2)}")
     # print(f"RandomForestClassifier     : accuracy {scores3.mean().round(2)}, std: {scores3.std().round(2)}")
 
-    return [('LDA ', pipeline1, scores1), ('LOGR', pipeline1, scores2), ('RFC ', pipeline3, scores3)]
+    return [('LDA ', pipeline1, scores1), ('LOGR', pipeline2, scores2), ('RFC ', pipeline3, scores3)]
 
 
 def save_pipeline(pipe, epochs_data_train, labels, subjectID):
