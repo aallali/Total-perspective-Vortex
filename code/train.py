@@ -2,7 +2,7 @@
 
 import matplotlib
 
-from myCSP import CSP  # use my own CSP
+from CSP import CSP  # use my own CSP
 
 # from mne.decoding import CSP
 from mne.decoding import SPoC
@@ -51,16 +51,26 @@ def save_pipeline(pipe, epochs_data_train, labels, subjectID):
     return
 
 
-def train_data(X, y, subjectID, transformer="CSP"):
+def train_data(X, y, transformer="CSP"):
     if transformer == "CSP":
+        from mne.decoding import CSP
         # using CSP transformers
         csp1 = CSP()
         csp2 = CSP()
         csp3 = CSP()
         return pipeline_creation(X, y, csp1, csp2, csp3)
-    else:
+    elif transformer == "FAST_CSP":
+        from CSP import CSP
+        # using custom CSP transformers
+        csp1 = CSP()
+        csp2 = CSP()
+        csp3 = CSP()
+        return pipeline_creation(X, y, csp1, csp2, csp3)
+    elif transformer == "SPoC":
         # using Spoc transformers
         Spoc1 = SPoC(n_components=15, reg='oas', log=True, rank='full')
         Spoc2 = SPoC(n_components=15, reg='oas', log=True, rank='full')
         Spoc3 = SPoC(n_components=15, reg='oas', log=True, rank='full')
         return pipeline_creation(X, y, Spoc1, Spoc2, Spoc3)
+    else:
+        raise ValueError(f"Unknown transformer, please enter valid one.")
