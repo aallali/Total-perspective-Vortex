@@ -58,23 +58,23 @@ def train_data(X, y, transformer="CSP", run_all_pipelines=False):
         from mne.decoding import CSP
         # using CSP transformers
         if run_all_pipelines:
-            csp1 = CSP()
-            csp2 = CSP()
-            csp3 = CSP()
+            csp1 = CSP(n_components=10)
+            csp2 = CSP(n_components=10)
+            csp3 = CSP(n_components=10)
             return pipeline_creation(X, y, csp1, csp2, csp3)
         return pipeline_creation(X, y, CSP())
     elif transformer == "FAST_CSP":
         from CSP import CSP
         # using custom CSP transformers
         if run_all_pipelines:
-            csp1 = CSP()
-            csp2 = CSP()
-            csp3 = CSP()
+            csp1 = CSP(n_components=10)
+            csp2 = CSP(n_components=10)
+            csp3 = CSP(n_components=10)
             return pipeline_creation(X, y, csp1, csp2, csp3)
         return pipeline_creation(X, y, CSP())
+
     elif transformer == "SPoC":
         # using Spoc transformers
-
         if run_all_pipelines:
             Spoc1 = SPoC(n_components=15, reg='oas', log=True, rank='full')
             Spoc2 = SPoC(n_components=15, reg='oas', log=True, rank='full')
