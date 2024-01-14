@@ -45,9 +45,9 @@ def pipeline_creation(X, y, transformer1, transformer2=None, transformer3=None):
     return final_result
 
 
-def save_pipeline(pipe, epochs_data_train, labels, subjectID):
+def save_pipeline(pipe, epochs_data_train, labels, subjectID, experiment_name):
     pipe = pipe.fit(epochs_data_train, labels)
-    fileName = f"models/model-subject-{subjectID}.joblib"
+    fileName = f"models/model_subject_{subjectID}_{experiment_name}.joblib"
     dump(pipe, fileName)
     # print(f"-> model saved to {fileName}")
     return
