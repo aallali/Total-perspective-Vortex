@@ -2,9 +2,6 @@
 
 import matplotlib
 
-from CSP import CSP  # use my own CSP
-
-# from mne.decoding import CSP
 from mne.decoding import SPoC
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
 
@@ -63,6 +60,7 @@ def train_data(X, y, transformer="CSP", run_all_pipelines=False):
             csp3 = CSP(n_components=10)
             return pipeline_creation(X, y, csp1, csp2, csp3)
         return pipeline_creation(X, y, CSP())
+
     elif transformer == "FAST_CSP":
         from CSP import CSP
         # using custom CSP transformers
