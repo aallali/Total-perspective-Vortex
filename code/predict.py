@@ -9,8 +9,9 @@ def predict(X, y , subjectId, experiment_name, log=False):
         raise Exception(f"File not found: {PREDICT_MODEL}")
 
     scores = []
-    print("epoch_nb =  [prediction]    [truth]    equal?")
-    print("---------------------------------------------")
+    if log:
+        print("epoch_nb =  [prediction]    [truth]    equal?")
+        print("---------------------------------------------")
     for n in range(X.shape[0]):
         pred = clf.predict(X[n:n + 1, :, :])[0]
         truth = y[n:n + 1][0]
