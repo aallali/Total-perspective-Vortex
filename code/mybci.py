@@ -3,6 +3,8 @@ from predict import predict
 from train import train_data, save_pipeline
 from process import pre_process_data
 from ENUMS import EXPERIMENTS
+import numpy as np
+
 if __name__ == "__main__":
     args = load_config("config.yaml")
     print(args)
@@ -14,11 +16,14 @@ if __name__ == "__main__":
     #     'transformer': "CSP",  # or "SPoC",
     #     'experiment': 'do/hands'
     # }
+    cross_val_scores = []
+    accuracy_scores = []
+
     for subjectID in args['SUBJECTS']:
         print(f"-----------------------[Subject {subjectID}]------------------------")
       
         [X, y, epochs] = pre_process_data(subjectID, EXPERIMENTS[args['EXPERIMENT']])
-        print(f"X shape: {X.shape} | Y shape: {y.shape}")
+        # print(f"X shape: {X.shape} | Y shape: {y.shape}")
 
         if args['MODE'] == "train" or args['MODE'] == "all":
             pipelines = train_data(X, y, args['TRANSFORMER'])
@@ -33,9 +38,15 @@ if __name__ == "__main__":
                 if pipeline_name == "LDA ":
                     bestPipeline = {'name': pipeline_name, 'cross_val_score': cross_val_score, 'pipeline': pipeline}
             # print((f":-- Best Pipeline is '{bestPipeline['name']}' : accuracy {bestPipeline['cross_val_score'].round(2)}"))
+            cross_val_scores.append(cross_val_score)
             save_pipeline(bestPipeline['pipeline'],X, y, subjectID)
 
         if args['MODE'] == "predict" or args['MODE'] == "all":
             prediction_result = predict(X, y , subjectID)
-            print(f":-- Prediction accurracy: {prediction_result}")
-        print("\n\n")
+            print(f":--- Prediction accurracy: {prediction_result}")
+            accuracy_scores.append(prediction_result)
+
+    print("----------------------------[Mean Scores for all subjects]----------------------------")
+    print(f":--- Mean cross_val : {np.mean(cross_val_scores).round(2)}")
+    print(f":--- Mean accuracy  : {np.mean(accuracy_scores).round(2)}")
+
