@@ -194,3 +194,6 @@ modify mne/cov.py Line 1250: RawArray(data.T, info, copy=None, verbose=_verbose_
 - CSP equation explained: [Blind Source Separation via Generalized Eigenvalue Decomposition](https://www.jmlr.org/papers/volume4/parra03a/parra03a.pdf)
 - **[Optimizing Spatial Filters for Robust EEG Single-Trial Analysis](https://doc.ml.tu-berlin.de/bbci/publications/BlaTomLemKawMue08.pdf)**
    - page 3 and 5: CSP effect explained
+- CSP implemntation:
+  - https://mne.tools/stable/generated/mne.decoding.CSP.html#footcite-blankertzetal2008
+  - https://mne.tools/stable/auto_tutorials/machine-learning/50_decoding.html#sphx-glr-auto-tutorials-machine-learning-50-decoding-py Skull visualtion 
