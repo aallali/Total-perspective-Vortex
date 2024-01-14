@@ -20,6 +20,7 @@ if __name__ == "__main__":
     accuracy_scores = []
 
     for subjectID in args['SUBJECTS']:
+        print(f"----------------------------------------------------------")
         print(f"-----------------------[Subject {subjectID}]------------------------")
       
         [X, y, epochs] = pre_process_data(subjectID, EXPERIMENTS[args['EXPERIMENT']])

@@ -131,7 +131,6 @@ def pre_process_data(subjectID, experiments):
 
     labels, epochs, picks = fetch_events(raw_filtered)
 
-
     # Extract only the epochs corresponding to the selected labels
     selected_epochs = epochs[experiments]
 
