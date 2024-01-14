@@ -1,0 +1,22 @@
+SUBJECTS: [1, 2, 3, 42]
+MODE: all
+TRANSFORMER: FAST_CSP
+EXPERIMENT: hands_vs_feet__imagery
+
+# SUBJECTS:
+#    number between 1-100 or empty array
+
+# MODE:
+#    train
+#    predict
+
+# TRANSFORMERS:
+#    CSP
+#    SPoC
+#    FAST_CSP
+
+# EXPERIMENTS:
+#    hands_vs_feet__action
+#    hands_vs_feet__imagery
+#    imagery_vs_action__hands
+#    imagery_vs_action__feets
