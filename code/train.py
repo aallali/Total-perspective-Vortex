@@ -20,7 +20,7 @@ matplotlib.use('TkAgg')
 def pipeline_creation(X, y, transformer1, transformer2=None, transformer3=None):
     cv = ShuffleSplit(10, test_size=0.2, random_state=42)
 
-    lda = LDA(solver='svd')
+    lda = LDA(solver='lsqr', shrinkage='auto')
     log_reg = LogisticRegression(penalty='l1', solver='liblinear', multi_class='auto')
     rfc = RandomForestClassifier(n_estimators=100, random_state=42)
 
