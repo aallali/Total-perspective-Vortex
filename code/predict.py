@@ -2,7 +2,7 @@ from joblib import load
 import numpy as np
 
 def predict(X, y , subjectId, experiment_name, log=False):
-    PREDICT_MODEL = f"models/model_subject_{subjectId}_{experiment_name}.joblib"
+    PREDICT_MODEL = f"../data/models/model_subject_{subjectId}_{experiment_name}.joblib"
     try:
         clf = load(PREDICT_MODEL)
     except FileNotFoundError as e:
