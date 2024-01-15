@@ -1,11 +1,13 @@
-SUBJECTS: [1, 2, 3, 42]
+SUBJECTS: [1]
 MODE: all
 TRANSFORMER: FAST_CSP
-EXPERIMENT: hands_vs_feet__imagery
+EXPERIMENT: imagery_vs_action__feets
 
 # SUBJECTS:
-#    number between 1-100 or empty array
-
+#    list of numbers between 1-100 or empty array
+#    examples:
+#       - [1,2,3,42] : subjects selected are 1,2,3,42 only
+#       - [] : all subjects will be selected from 1 to 109
 # MODE:
 #    train
 #    predict
