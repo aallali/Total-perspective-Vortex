@@ -197,3 +197,4 @@ modify mne/cov.py Line 1250: RawArray(data.T, info, copy=None, verbose=_verbose_
 - CSP implemntation:
   - https://mne.tools/stable/generated/mne.decoding.CSP.html#footcite-blankertzetal2008
   - https://mne.tools/stable/auto_tutorials/machine-learning/50_decoding.html#sphx-glr-auto-tutorials-machine-learning-50-decoding-py Skull visualtion 
+- Lecture 7.3 Common Spatial Patterns : https://youtu.be/zsOULC16USU
