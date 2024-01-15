@@ -115,11 +115,19 @@ class CSP(BaseEstimator, TransformerMixin):
     def fit(self, X, y):
         self.n_classes = np.unique(y)
 
-        if (len(self.n_classes) < 2):
+        if len(self.n_classes) < 2:
             raise ValueError("n_classes must be >= 2")
+
+        # Calculate the covariance matrices for each class
         covs = self.calculate_cov_(X, y)
+
+        # Calculate the eigenvalues and eigenvectors for the covariances
         eigenvalues, eigenvectors = self.calculate_eig_(covs)
+
+        # Pick the CSP filters based on eigenvalues and eigenvectors
         self.pick_filters(eigenvectors)
+
+        # Transform the input data using the selected CSP filters
         X = np.asarray([np.dot(self.filters, epoch) for epoch in X])
         X = (X ** 2).mean(axis=2)
 
@@ -128,10 +136,35 @@ class CSP(BaseEstimator, TransformerMixin):
         self.std = X.std(axis=0)
 
     def transform(self, X):
+        # Transform the input data using the selected CSP filters
         X = np.asarray([np.dot(self.filters, epoch) for epoch in X])
+
+        # Square and average along the time axis
         X = (X ** 2).mean(axis=2)
+
+        # Standardize features
         X -= self.mean
         X /= self.std
+        """
+        example:
+            X = [[2, 4, 6],
+                 [1, 3, 5],
+                 [3, 5, 7]]
+            mean = [2, 4, 6]
+            X -= mean
+                
+            Result:
+            X = [[0, 0, 0],
+                 [-1, -1, -1],
+                 [1, 1, 1]]
+            std = [0.8165, 0.8165, 0.8165]
+            X /= std
+            
+            Result:
+            X = [[0, 0, 0],
+                 [-1.2247, -1.2247, -1.2247],
+                 [1.2247, 1.2247, 1.2247]]
+        """
         return X
 
     def fit_transform(self, X, y):
