@@ -9,6 +9,8 @@ import concurrent.futures
 import json
 import hashlib
 import time
+
+
 def hash_list_secure(my_list):
     # Sort the list and convert it to a tuple
     sorted_tuple = tuple(sorted(my_list))
@@ -29,11 +31,10 @@ def process_subject(subjectID, args, isSingleSubject=False):
         'subject_id': subjectID,
         'pipelines': [],
         'cross_val_score': 0,
-        'accuracy': 0,
-        'time_unit': "seconds"
+        'accuracy': 0
     }
     if args['MODE'] == "train" or args['MODE'] == "all":
-        pipelines = train_data(X=X, y=y, transformer=args['TRANSFORMER'], run_all_pipelines=False)
+        pipelines = train_data(X=X, y=y, transformer=args['TRANSFORMER'], run_all_pipelines=isSingleSubject)
         best_pipeline = {'cross_val_score': -1}
 
         for pipel in pipelines:
@@ -66,6 +67,7 @@ def process_subject(subjectID, args, isSingleSubject=False):
     print(f":--- [S{subjectID}] time cost: {stats['time_cost']} seconds")
     return stats
 
+
 def main():
     # Record the start time
     start_time = time.time()
@@ -82,14 +84,16 @@ def main():
         'subjects_hash': "all" if len(args['SUBJECTS']) == 109 else ''.join(map(str, args['SUBJECTS'])),
         'config': args,
         'events': EXPERIMENTS[args['EXPERIMENT']],
-        'subjects': []
+        'subjects': [],
+        'time_unit': "seconds"
     }
     print(final_stats)
-    max_workers = 3  # Adjust this value based on your CPU and system resources
+    max_workers = 2  # Adjust this value based on your CPU and system resources
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
         # Process each subject in parallel with a maximum of max_workers threads
-        results = executor.map(lambda subjectID: process_subject(subjectID, args, isSingleSubject=not CALC_MEAN_FOR_ALL),
-                               args['SUBJECTS'], )
+        results = executor.map(
+            lambda subjectID: process_subject(subjectID, args, isSingleSubject=not CALC_MEAN_FOR_ALL),
+            args['SUBJECTS'], )
 
     # Collect results from parallel processing
 
@@ -109,18 +113,19 @@ def main():
             print(f":--- Mean accuracy  : {np.mean(accuracy_scores).round(2)}")
             final_stats['mean_accuracy'] = np.mean(accuracy_scores)
 
-
     # Record the end time
     end_time = time.time()
 
     # Calculate the time cost
     time_cost = end_time - start_time
     final_stats['time_cost'] = time_cost
-    if args['MODE'] == "all":
-        results_filename = \
-            f"../data/results/results-{args['EXPERIMENT']}-{time.time()}-{args['TRANSFORMER']}-{final_stats['subjects_hash']}.json"
-        with open(results_filename, 'w', encoding='utf-8') as f:
-            json.dump(final_stats, f, ensure_ascii=False, indent=4)
+
+    results_filename = \
+        f"../data/results/results-{args['MODE']}-{args['EXPERIMENT']}-{time.time()}-{args['TRANSFORMER']}-{final_stats['subjects_hash']}.json"
+    with open(results_filename, 'w', encoding='utf-8') as f:
+        json.dump(final_stats, f, ensure_ascii=False, indent=4)
+    print(f"result of training+prediction are stored in [{results_filename}]")
+
 
 if __name__ == "__main__":
     main()
