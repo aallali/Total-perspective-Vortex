@@ -19,8 +19,13 @@ def load_config(file_path):
         raise ValueError("SUBJECT must be an array.")
 
     for subjectID in config['SUBJECTS']:
-        if subjectID < 1 or subjectID > 100:
+        if subjectID < 1 or subjectID > 109:
             raise ValueError(f"Invalid SUBJECT value: {subjectID}. Valid values are {SUBJECTS}")
+    if not config['SUBJECTS']:
+        config['SUBJECTS'] = list(range(1, 110))
+    else:
+        config['SUBJECTS'] = list(set(config['SUBJECTS']))
+        config['SUBJECTS'].sort()
 
     if config['MODE'] not in MODES:
         raise ValueError(f"Invalid MODE value: {config['MODE']}. Valid values are {MODES}")
