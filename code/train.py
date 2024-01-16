@@ -54,31 +54,36 @@ def train_data(X, y, transformer="CSP", run_all_pipelines=False):
     if transformer == "CSP":
         from mne.decoding import CSP
         # using CSP transformers
+        csp1 = CSP()
+
         if run_all_pipelines:
-            csp1 = CSP(n_components=10)
-            csp2 = CSP(n_components=10)
-            csp3 = CSP(n_components=10)
+            csp2 = CSP()
+            csp3 = CSP()
             return pipeline_creation(X, y, csp1, csp2, csp3)
-        return pipeline_creation(X, y, CSP())
+
+        return pipeline_creation(X, y, csp1)
 
     elif transformer == "FAST_CSP":
         from CSP import CSP
         # using custom CSP transformers
+        csp1 = CSP()
+
         if run_all_pipelines:
-            csp1 = CSP(n_components=10)
-            csp2 = CSP(n_components=10)
-            csp3 = CSP(n_components=10)
+            csp2 = CSP()
+            csp3 = CSP()
             return pipeline_creation(X, y, csp1, csp2, csp3)
-        return pipeline_creation(X, y, CSP())
+
+        return pipeline_creation(X, y, csp1)
 
     elif transformer == "SPoC":
         # using Spoc transformers
+        Spoc1 = SPoC(n_components=15, reg='oas', log=True, rank='full')
+
         if run_all_pipelines:
-            Spoc1 = SPoC(n_components=15, reg='oas', log=True, rank='full')
             Spoc2 = SPoC(n_components=15, reg='oas', log=True, rank='full')
             Spoc3 = SPoC(n_components=15, reg='oas', log=True, rank='full')
             return pipeline_creation(X, y, Spoc1, Spoc2, Spoc3)
         else:
-            return pipeline_creation(X, y, SPoC(n_components=15, reg='oas', log=True, rank='full'))
+            return pipeline_creation(X, y, Spoc1)
     else:
         raise ValueError(f"Unknown transformer, please enter valid one.")
