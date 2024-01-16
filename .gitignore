@@ -8,3 +8,4 @@ __pycache__/
 tmp/
 *.joblib
 .idea
+data/results/*.json
