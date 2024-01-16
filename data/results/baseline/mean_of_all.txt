@@ -1,0 +1,6 @@
+hands_vs_feet__action : 0.9302385321100917 ≈ 0.93
+hands_vs_feet__imagery : 0.9070366972477066 ≈ 0.91
+imagery_vs_action__hands : 0.8815871559633028 ≈ 0.88
+imagery_vs_action__feets : 0.936376146788991 ≈ 0.94
+
+mean : 0.9138096330275229  ≈ 0.91
