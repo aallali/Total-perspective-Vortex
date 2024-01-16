@@ -137,23 +137,21 @@ In this example, `8.` and `13.` are the low and high cutoff frequencies for an 8
     - This part specifies the number of simpler, independent components that the ICA algorithm aims to find in the EEG data. In this case, the algorithm is instructed to look for and separate the data into 20 such components.
     - Each independent component represents a different underlying source of electrical activity. These could include brain signals related to specific cognitive processes or activities, as well as potential artifacts like eye movements or muscle activity.
     - Choosing the appropriate number of components is a crucial step in ICA. If the number is too low, you may not capture all relevant sources in the data. If it's too high, you might end up with components that represent noise or overfit the data.
-### ICA vs FIR
+### ICA
 Both Independent Component Analysis (ICA) and Finite Impulse Response (FIR) filtering, implemented with the `'firwin'` method, serve distinct purposes in EEG data preprocessing:
 
-1. **ICA (Independent Component Analysis):**
+- **ICA (Independent Component Analysis):**
    - **Purpose:** ICA is primarily used for separating mixed sources in EEG data. It is particularly powerful in identifying and isolating independent components that may represent distinct neural or non-neural processes.
    - **Artifact Removal:** One common use of ICA is to identify and remove artifacts from the EEG signal. Artifacts such as eye blinks, muscle activity, or other external interference can be represented by independent components, which can then be removed or corrected.
    - **Signal Separation:** ICA can be used to separate the EEG signal into independent components, each representing a different underlying source. This can aid in isolating meaningful neural activity from noise or artifacts.
-
-2. **FIR  (Finite Impulse Response) Filtering with `'firwin'` Method:**
+### FIR
+- **FIR  (Finite Impulse Response) Filtering with `'firwin'` Method:**
    - **Purpose:** FIR filtering is employed to modify the frequency content of the EEG signal. The `'firwin'` method specifically refers to using the FIR window design method for filter coefficient calculation.
    - **Artifact Removal and Signal Modification:** FIR filtering can be used to remove or attenuate specific frequency components in the EEG signal. For example, it can be used for noise reduction, removal of power line interference, or focusing on specific frequency bands of interest.
    - **Preprocessing:** Filtering is often used as a preprocessing step to condition the data for subsequent analyses. For example, bandpass filtering may be applied to focus on a specific frequency range relevant to the experiment.
 
 In summary, while ICA is more focused on the separation of sources and removal of artifacts, FIR filtering with `'firwin'` is used for modifying the frequency characteristics of the EEG signal. The two techniques can complement each other in a comprehensive EEG preprocessing pipeline, addressing different aspects of data quality and analysis requirements.
 ### setup enviroment:
-- Install MNE first, follow the official wesite [here](https://mne.tools/stable/install/index.html).
-    
 - Create Virtual Environment and Activate
     - `python3 -m venv tenv`
     - `source tenv/bin/activate`
@@ -162,14 +160,8 @@ In summary, while ICA is more focused on the separation of sources and removal o
     - `sudo apt-get install libblas-dev liblapack-dev libffi-dev libgfortran5`
 
 -  Install Python Packages including Pillow
-    - `pip install matplotlib mne ipykernel Pillow`
--  enable widgets extensions in jupyter:
-   - ```shell
-      pip install jupyter_contrib_nbextensions
-      jupyter contrib nbextension install --user
-      jupyter nbextension enable varInspector/main
-      jupyter nbextension enable --py widgetsnbextension
--  Create Jupyter Kernel for Virtual Environment
+    - `pip install -r requirements.txt`
+ 
     - `python -m ipykernel install --user --name tenv --display-name "Python3 (tenv)" `
 
 -  Start JupyterLab (make sure to run it inside the project folder)
