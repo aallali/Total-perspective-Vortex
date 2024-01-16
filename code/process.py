@@ -64,10 +64,13 @@ def fetch_data(subjNumber):
     return [raw, event, event_dict, picks]
 
 def prepare_data(raw, plotIt=False):
-    raw.rename_channels(lambda x: x.strip('.'))
-    montage = make_standard_montage('standard_1020')
-    eegbci.standardize(raw)
-    raw.set_montage(montage)
+    # raw.rename_channels(lambda x: x.strip('.'))
+    # montage = make_standard_montage('biosemi64')
+    # eegbci.standardize(raw)
+    # raw.set_montage(montage)
+    eegbci.standardize(raw)  # set channel names
+    montage = make_standard_montage("biosemi64")
+    raw.set_montage(montage, on_missing='ignore')
 
     # plot
     if plotIt:
@@ -127,7 +130,7 @@ def pre_process_data(subjectID, experiments):
 
     raw_filtered = filter_data(raw_prepared)
 
-    filter_eye_artifacts(raw_filtered, picks, "fastica")
+    # filter_eye_artifacts(raw_filtered, picks, "fastica")
 
     labels, epochs, picks = fetch_events(raw_filtered)
 
