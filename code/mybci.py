@@ -34,7 +34,7 @@ def process_subject(subjectID, args, isSingleSubject=False):
         'accuracy': 0
     }
     if args['MODE'] == "train" or args['MODE'] == "all":
-        pipelines = train_data(X=X, y=y, transformer=args['TRANSFORMER'], run_all_pipelines=isSingleSubject)
+        pipelines = train_data(X=X, y=y, transformer=args['TRANSFORMER'], run_all_pipelines=True)
         best_pipeline = {'cross_val_score': -1}
 
         for pipel in pipelines:
@@ -67,6 +67,7 @@ def process_subject(subjectID, args, isSingleSubject=False):
     print(f":--- [S{subjectID}] time cost: {round(stats['time_cost'], 2)} seconds")
     return stats
 
+
 def calculate_all_means(cross_val_scores, accuracy_scores, final_stats):
     print("\n----------------------------[Mean Scores for all subjects]----------------------------")
     if len(cross_val_scores) > 1:
@@ -76,6 +77,7 @@ def calculate_all_means(cross_val_scores, accuracy_scores, final_stats):
         print(f":--- Mean accuracy  : {np.mean(accuracy_scores).round(2)}")
         final_stats['mean_accuracy'] = np.mean(accuracy_scores)
 
+
 def dumb_result_to_json(final_stats, args):
     results_filename = \
         f"../data/results/results-{args['MODE']}-{args['EXPERIMENT']}-{time.time()}-{args['TRANSFORMER']}-{final_stats['subjects_hash']}.json"
@@ -84,6 +86,7 @@ def dumb_result_to_json(final_stats, args):
         json.dump(final_stats, f, ensure_ascii=False, indent=4)
 
     print(f"result of training+prediction are stored in \n[{results_filename}]")
+
 
 def main():
     # Record the start time
@@ -123,6 +126,7 @@ def main():
     print(f":--- Time Elapsed for all : {round(final_stats['time_cost'], 2)}")
 
     dumb_result_to_json(final_stats, args)
+
 
 if __name__ == "__main__":
     main()
