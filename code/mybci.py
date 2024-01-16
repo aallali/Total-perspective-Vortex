@@ -64,9 +64,26 @@ def process_subject(subjectID, args, isSingleSubject=False):
     time_cost_inner = end_time_inner - start_time_inner
     stats['time_cost'] = time_cost_inner
     print(*output, sep="\n")
-    print(f":--- [S{subjectID}] time cost: {stats['time_cost']} seconds")
+    print(f":--- [S{subjectID}] time cost: {round(stats['time_cost'], 2)} seconds")
     return stats
 
+def calculate_all_means(cross_val_scores, accuracy_scores, final_stats):
+    print("\n----------------------------[Mean Scores for all subjects]----------------------------")
+    if len(cross_val_scores) > 1:
+        print(f":--- Mean cross_val : {np.mean(cross_val_scores).round(2)}")
+        final_stats['mean_cross_val_score'] = np.mean(cross_val_scores)
+    if len(accuracy_scores) > 1:
+        print(f":--- Mean accuracy  : {np.mean(accuracy_scores).round(2)}")
+        final_stats['mean_accuracy'] = np.mean(accuracy_scores)
+
+def dumb_result_to_json(final_stats, args):
+    results_filename = \
+        f"../data/results/results-{args['MODE']}-{args['EXPERIMENT']}-{time.time()}-{args['TRANSFORMER']}-{final_stats['subjects_hash']}.json"
+
+    with open(results_filename, 'w', encoding='utf-8') as f:
+        json.dump(final_stats, f, ensure_ascii=False, indent=4)
+
+    print(f"result of training+prediction are stored in \n[{results_filename}]")
 
 def main():
     # Record the start time
@@ -87,45 +104,25 @@ def main():
         'subjects': [],
         'time_unit': "seconds"
     }
-    print(final_stats)
-    max_workers = 2  # Adjust this value based on your CPU and system resources
-    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
-        # Process each subject in parallel with a maximum of max_workers threads
-        results = executor.map(
-            lambda subjectID: process_subject(subjectID, args, isSingleSubject=not CALC_MEAN_FOR_ALL),
-            args['SUBJECTS'], )
 
-    # Collect results from parallel processing
-
-    for result in results:
+    for subjectID in args['SUBJECTS']:
+        result = process_subject(subjectID, args, isSingleSubject=not CALC_MEAN_FOR_ALL)
         if args['MODE'] == "train" or args['MODE'] == "all":
             cross_val_scores.append(result['cross_val_score'])
+
         if args['MODE'] == "predict" or args['MODE'] == "all":
             accuracy_scores.append(result['accuracy'])
 
         final_stats['subjects'].append(result)
+
     if CALC_MEAN_FOR_ALL:
-        print("\n----------------------------[Mean Scores for all subjects]----------------------------")
-        if len(cross_val_scores) > 1:
-            print(f":--- Mean cross_val : {np.mean(cross_val_scores).round(2)}")
-            final_stats['mean_cross_val_score'] = np.mean(cross_val_scores)
-        if len(accuracy_scores) > 1:
-            print(f":--- Mean accuracy  : {np.mean(accuracy_scores).round(2)}")
-            final_stats['mean_accuracy'] = np.mean(accuracy_scores)
+        calculate_all_means(cross_val_scores, accuracy_scores, final_stats)
 
-    # Record the end time
-    end_time = time.time()
+    # store elapsed time to final report file
+    final_stats['time_cost'] = time.time() - start_time
+    print(f":--- Time Elapsed for all : {round(final_stats['time_cost'], 2)}")
 
-    # Calculate the time cost
-    time_cost = end_time - start_time
-    final_stats['time_cost'] = time_cost
-
-    results_filename = \
-        f"../data/results/results-{args['MODE']}-{args['EXPERIMENT']}-{time.time()}-{args['TRANSFORMER']}-{final_stats['subjects_hash']}.json"
-    with open(results_filename, 'w', encoding='utf-8') as f:
-        json.dump(final_stats, f, ensure_ascii=False, indent=4)
-    print(f"result of training+prediction are stored in [{results_filename}]")
-
+    dumb_result_to_json(final_stats, args)
 
 if __name__ == "__main__":
     main()
